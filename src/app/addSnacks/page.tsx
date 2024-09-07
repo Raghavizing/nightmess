@@ -11,7 +11,8 @@ export default function AddSnacks() {
         item_category: "",
         item_image: "",
         item_quantity: 0,
-        item_block: ""
+        item_block: "",
+        item_room:"",
     })
     function handleChange(event: any) {
         const { name, value } = event.target
@@ -50,7 +51,8 @@ export default function AddSnacks() {
                         item_category: "",
                         item_image: "",
                         item_quantity: 0,
-                        item_block: ""
+                        item_block: "",
+                        item_room:"",
                     })
                 }
                 else {
@@ -102,8 +104,12 @@ export default function AddSnacks() {
                         </select>
                     </div>
                     <div>
+                        <label htmlFor="item_room" className="form-label my-auto">Room Number:</label>
+                        <input type="text" name="item_room" id="item_room" className="form-control my-2" placeholder="Room Number" onChange={handleChange} value={snack.item_room} required />
+                    </div>
+                    <div>
                         <label htmlFor="item_image" className="form-label my-auto">Item Image:</label>
-                        <input type="url" name="item_image" id="item_item_image" className="form-control my-2" placeholder="Image URL" onChange={handleChange} value={snack.item_image} required />
+                        <input type="url" name="item_image" id="item_image" className="form-control my-2" placeholder="Image URL" onChange={handleChange} value={snack.item_image} required />
                     </div>
                     <div className="my-2 text-center"><input type="submit" value="Submit" className="btn btn-dark" disabled={disableBtn} /></div>
                 </form>

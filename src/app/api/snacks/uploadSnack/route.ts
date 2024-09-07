@@ -18,7 +18,8 @@ export async function POST(request: NextRequest) {
                     item_category: req.item_category,
                     item_image: req.item_image,
                     item_quantity: parseInt(req.item_quantity),
-                    item_block: req.item_block
+                    item_block: req.item_block,
+                    item_room:req.item_room
 
                 })
                 console.log(snack);

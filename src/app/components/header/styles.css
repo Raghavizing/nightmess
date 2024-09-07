@@ -1,0 +1,42 @@
+.header {
+    background-color: #343a40; /* Dark background */
+    position: relative; /* Positioning for better control */
+    z-index: 1000; /* Ensure header is above other content */
+}
+
+.nav-link {
+    color: #fff !important; /* Ensure nav links are white */
+    font-size: 1rem; /* Font size for nav links */
+}
+
+.nav-link:hover {
+    color: #adb5bd !important; /* Light grey color on hover */
+}
+
+.btn-light {
+    color: #343a40; /* Dark text for light button */
+    background-color: #f8f9fa; /* Light background */
+    border: none;
+}
+
+.navbar-nav {
+    margin-top: 1rem; /* Add margin to prevent content from pushing */
+}
+
+.navbar-nav .nav-link {
+    padding: 0.5rem 1rem; /* Padding for mobile menu links */
+}
+
+/* Ensure the navigation links are hidden on mobile and displayed on larger screens */
+@media (min-width: 768px) {
+    .d-md-flex {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .d-md-none {
+        display: block !important;
+    }
+}
+    

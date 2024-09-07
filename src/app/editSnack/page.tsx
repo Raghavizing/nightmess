@@ -13,7 +13,8 @@ export default function EditSnack() {
         item_quantity: 0,
         item_category: "",
         item_block: "",
-        item_image: ""
+        item_image: "",
+        item_room:""
     });
     const [disableBtn, setDisableBtn] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -23,7 +24,8 @@ export default function EditSnack() {
         item_quantity: 0,
         item_category: "",
         item_block: "",
-        item_image: ""
+        item_image: "",
+        item_room:""
     });
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -106,8 +108,9 @@ export default function EditSnack() {
             snack.item_quantity === originalSnack?.item_quantity &&
             snack.item_category === originalSnack?.item_category &&
             snack.item_block === originalSnack?.item_block &&
-            snack.item_image === originalSnack?.item_image;
-        if (isEqual || snack.item_name.length === 0 || snack.item_block.length === 0 || snack.item_category.length === 0 || snack.item_quantity === 0 || snack.item_price === 0) {
+            snack.item_image === originalSnack?.item_image &&
+            snack.item_room === originalSnack?.item_room;
+        if (isEqual || snack.item_name.length === 0 || snack.item_block.length === 0 || snack.item_category.length === 0 || snack.item_quantity === 0 || snack.item_price === 0 || snack.item_room.length===0) {
             setDisableBtn(true);
         }
         else {
@@ -142,6 +145,10 @@ export default function EditSnack() {
                         <option value="L">L Block</option>
                         <option value="N">N Block</option>
                     </select>
+                </div>
+                <div>
+                    <label htmlFor="item_room" className="form-label my-auto">Room Number:</label>
+                    <input type="text" name="item_room" id="item_room" className="form-control my-2" placeholder="Room Number" onChange={handleChange} value={snack.item_room} required />
                 </div>
                 <input type="url" name="item_image" id="image" className="form-control my-2" placeholder="Image URL" onChange={handleChange} value={snack.item_image} required />
                 <div className="my-2 text-center"><input type="submit" value="Submit" className="btn btn-dark" disabled={disableBtn} /></div>

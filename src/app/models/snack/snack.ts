@@ -10,7 +10,8 @@ const snackSchema = new Schema({
     item_image: String,
     item_category: String,
     item_block: String,
-    item_quantity: Number
+    item_quantity: Number,
+    item_room:String
 
 });
 const Snack = mongoose.models.snacks || mongoose.model("snacks", snackSchema);
