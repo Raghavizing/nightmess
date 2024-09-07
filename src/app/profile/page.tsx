@@ -81,7 +81,7 @@ export default function Profile() {
                 <img src={item_image} className="card-img-top mx-auto" alt={item_name} style={{ maxHeight: '150px', objectFit: 'contain' }} />
                 <div className="card-body">
                     <h5 className="card-title text-center">{item_name}</h5>
-                    <p className="card-text text-center text-muted">Price: ${item_price}</p>
+                    <p className="card-text text-center text-muted">Price: Rs{item_price}</p>
                     <p className="card-text text-center text-muted">Quantity: {item_quantity}</p>
                     <p className="card-text text-center text-muted">Seller: {username}</p>
                     <p className="card-text text-center text-muted">Room: {item_block}-{item_room}</p>

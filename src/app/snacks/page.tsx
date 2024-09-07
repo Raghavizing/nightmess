@@ -85,7 +85,7 @@ export default function Snacks() {
                     />
                     <div className="card-body text-center">
                         <h5 className="card-title">{item_name}</h5>
-                        <p className="card-text text-muted">Price: ${item_price}</p>
+                        <p className="card-text text-muted">Price: Rs{item_price}</p>
                         <p className="card-text text-muted">Quantity: {item_quantity}</p>
                         <p className="card-text text-muted">Seller: {username}</p>
                         <button
