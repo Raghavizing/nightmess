@@ -68,7 +68,7 @@ export default function SnackDetails() {
               <strong>Category:</strong> {snack.item_category}
             </p>
             <p className="text-muted">
-              <strong>Price:</strong> ${snack.item_price}
+              <strong>Price:</strong> Rs {snack.item_price}
             </p>
             <p className="text-muted">
               <strong>Quantity:</strong> {snack.item_quantity}
