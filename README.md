@@ -7,7 +7,7 @@
 - **Snack Listings**: Students can add, view, and manage snack listings, including snack details like name, price, and quantity.
 - **Block-Based Listings**: Buyers can search for snacks available in their hostel blocks for easy transactions.
 - **Seller Contact Information**: Buyers receive the seller's contact details for direct communication and purchases.
-- **VIT Email Authentication**: Only students with a valid `@vit.ac.in` email address can register and log in.
+- **VIT Email Authentication**: Only students with a valid `@vitstudent.ac.in` email address can register and log in.
 - **Secure Authentication**: Powered by [Clerk](https://clerk.dev) for reliable and secure authentication.
 - **Database**: Snack listings and user data are stored using [MongoDB](https://www.mongodb.com).
 - **Frontend Framework**: Built with [Next.js](https://nextjs.org) for fast performance and server-side rendering.
@@ -32,10 +32,13 @@
   npm install
 
 5. Set up environment variables by creating a .env.local file in the root directory with the following values:
-  - MONGODB_URI=<your-mongodb-connection-string>
-  - CLERK_FRONTEND_API=<your-clerk-frontend-api>
-  - CLERK_API_KEY=<your-clerk-api-key>
-  - NEXT_PUBLIC_CLERK_FRONTEND_API=<your-clerk-frontend-api>
+- NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+- CLERK_SECRET_KEY=
+- NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+- NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+- NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+- NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+- MONGODB_URL = 
 
 6. Run the development server:
   npm run dev
@@ -43,7 +46,7 @@
 Open http://localhost:3000 to view the project in the browser.
 
 ## How It Works
-- **User Registration/Login:** Only students with a valid VIT email (@vit.ac.in) can create an account and log in using Clerk's authentication service.
+- **User Registration/Login:** Only students with a valid VIT email (@vitstudent.ac.in) can create an account and log in using Clerk's authentication service.
 - **Add Listings:** Users can post new snack listings, including the snack name, price, quantity, and their hostel block.
 - **View Listings:** Buyers can browse snacks by category and block.
 - **Contact Seller:** Buyers can directly view the seller’s contact details to initiate communication and arrange purchases.
