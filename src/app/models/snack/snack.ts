@@ -5,6 +5,7 @@ const snackSchema = new Schema({
     user_id: String,
     username: String,
     user_email: String,
+    user_phone: String,
     item_name: String,
     item_price: Number,
     item_image: String,

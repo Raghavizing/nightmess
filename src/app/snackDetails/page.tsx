@@ -80,11 +80,14 @@ export default function SnackDetails() {
             {/* Seller Info */}
             <div className="mt-4">
               <h4>Seller Information</h4>
-              <p className="text-muted" hidden={!snack.username || snack.username.length===0}>
+              <p className="text-muted" hidden={!snack.username || snack.username.length === 0}>
                 <strong>Name:</strong> {snack.username}
               </p>
               <p className="text-muted">
                 <strong>Email:</strong> {snack.user_email}
+              </p>
+              <p className="text-muted">
+                <strong>Phone Number:</strong> {snack.user_phone}
               </p>
             </div>
           </div>

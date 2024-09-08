@@ -60,7 +60,7 @@ export default function AddSnacks() {
                 }
             }
             catch (error: any) {
-                console.log(error.message);
+                toast.error(error.message);
             }
         }
     }

@@ -41,9 +41,9 @@ export default function Snacks() {
     useEffect(() => {
         getSnacks();
     }, []);
-    useEffect(()=>{
-        AOS.init({once:true})
-    },[filteredSnacks])
+    useEffect(() => {
+        AOS.init({ once: true })
+    }, [filteredSnacks])
 
     function handleChange(event: any) {
         const { name, value } = event.target;
@@ -73,21 +73,17 @@ export default function Snacks() {
         setLoading(false);
     }
 
-    function Card({ listing_id, username, item_name, item_price, item_quantity, item_image }: any) {
+    function Card({ listing_id, username, item_name, item_price, item_quantity, item_image, item_block, item_room }: any) {
         return (
-            <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch mb-4" data-aos="fade-up">
-                <div className="card shadow-sm">
-                    <img
-                        src={item_image}
-                        className="card-img-top mx-auto"
-                        alt={item_name}
-                        style={{ maxHeight: "150px", objectFit: "contain" }}
-                    />
-                    <div className="card-body text-center">
-                        <h5 className="card-title">{item_name}</h5>
-                        <p className="card-text text-muted">Price: Rs {item_price}</p>
-                        <p className="card-text text-muted">Quantity: {item_quantity}</p>
-                        <p className="card-text text-muted">Seller: {username}</p>
+            <div className="card col-md-4 col-sm-6 col-12 m-3 p-3 shadow-sm" data-aos="fade-up">
+                <img src={item_image} className="card-img-top mx-auto" alt={item_name} style={{ maxHeight: '150px', objectFit: 'contain' }} />
+                <div className="card-body">
+                    <h5 className="card-title text-center">{item_name}</h5>
+                    <p className="card-text text-center text-muted">Price: Rs {item_price}</p>
+                    <p className="card-text text-center text-muted">Quantity: {item_quantity}</p>
+                    <p className="card-text text-center text-muted">Seller: {username}</p>
+                    <p className="card-text text-center text-muted">Room: {item_block}-{item_room}</p>
+                    <div className="d-flex justify-content-center">
                         <button
                             className="btn btn-primary mt-3"
                             id={listing_id}

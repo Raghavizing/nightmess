@@ -13,13 +13,14 @@ export async function POST(request: NextRequest) {
                     user_id: user.id,
                     username: user.fullName,
                     user_email: user.primaryEmailAddress?.emailAddress,
+                    user_phone: user.primaryPhoneNumber?.phoneNumber,
                     item_name: req.item_name,
                     item_price: parseInt(req.item_price),
                     item_category: req.item_category,
                     item_image: req.item_image,
                     item_quantity: parseInt(req.item_quantity),
                     item_block: req.item_block,
-                    item_room:req.item_room
+                    item_room: req.item_room
 
                 })
                 console.log(snack);

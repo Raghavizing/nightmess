@@ -24,7 +24,6 @@ export default function Profile() {
             const res = await axios.get("/api/user/getUser");
             if (res.data.success) {
                 setUser(res.data.user);
-                console.log(res.data.user);
             } else {
                 toast.error(res.data.error);
             }
@@ -113,10 +112,11 @@ export default function Profile() {
                                 className="rounded-circle mx-auto"
                                 style={{ width: '150px', height: '150px', objectFit: 'cover' }}
                             />
-                            <h3 className="mt-3 text-center">
-                                {user.firstName} {user.lastName}
+                            <h3 className="mt-3 text-center" hidden={(!user.firstName || user.firstName.length===0) && (!user.lastName || user.lastName.length===0)}>
+                                Name: {user.firstName} {user.lastName}
                             </h3>
-                            <p className="text-center text-muted"> {user.emailAddresses && user.emailAddresses.length > 0 ? user.emailAddresses[0].emailAddress : 'Email not available'}</p>
+                            <p className="text-center text-muted">Phone Number: {user.phoneNumbers && user.phoneNumbers.length > 0 ? user.phoneNumbers[0].phoneNumber : 'Not available'}</p>
+                            <p className="text-center text-muted">Email Address: {user.emailAddresses && user.emailAddresses.length > 0 ? user.emailAddresses[0].emailAddress : 'Not available'}</p>
                             <p className="text-center text-muted">
                                 Joined on: {new Date(user.createdAt).toLocaleDateString()}
                             </p>
