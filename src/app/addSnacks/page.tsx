@@ -102,124 +102,146 @@ export default function AddSnacks() {
     }
 
     return (
-        <div className="container my-4">
-            <div className="row justify-content-center">
-                <div className="col-12 col-md-8 col-lg-6">
-                    <h1 className="text-center">Add Snack</h1>
-                    <form onSubmit={uploadSnack} className="form-group" encType="multipart/form-data">
-                        <div className="mb-3">
-                            <label htmlFor="item_name">Item Name:</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="item_name"
-                                name="item_name"
-                                placeholder="Name"
-                                onChange={handleChange}
-                                required
-                                value={snack.item_name}
-                            />
-                        </div>
+        <div className="page py-5">
+    <div className="container">
+        <div className="row justify-content-center">
+            <div className="col-12 col-md-8 col-lg-6">
+                <h1 className="text-center fw-bold mb-4" style={{ color: "#333" }}>Add Snack</h1>
 
-                        <div className="mb-3">
-                            <label htmlFor="item_price">Item Price:</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                id="item_price"
-                                name="item_price"
-                                placeholder="Price (INR)"
-                                onChange={handleChange}
-                                required
-                                value={snack.item_price}
-                                min={1}
-                            />
-                        </div>
+                {/* Snack Form */}
+                <form 
+                    onSubmit={uploadSnack} 
+                    className="form-group p-4 shadow-lg bg-white rounded-lg" 
+                    encType="multipart/form-data" 
+                    style={{ borderRadius: "15px" }}
+                >
+                    <div className="mb-3">
+                        <label htmlFor="item_name" className="form-label fw-bold">Item Name:</label>
+                        <input
+                            type="text"
+                            className="form-control p-2 rounded-pill shadow-sm"
+                            id="item_name"
+                            name="item_name"
+                            placeholder="Name"
+                            onChange={handleChange}
+                            required
+                            value={snack.item_name}
+                            style={{ transition: "box-shadow 0.3s ease-in-out" }}
+                            onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(0, 123, 255, 0.5)'}
+                            onBlur={(e) => e.target.style.boxShadow = 'none'}
+                        />
+                    </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="item_quantity">Item Quantity:</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                id="item_quantity"
-                                name="item_quantity"
-                                placeholder="Quantity"
-                                onChange={handleChange}
-                                required
-                                value={snack.item_quantity}
-                                min={1}
-                            />
-                        </div>
+                    <div className="mb-3">
+                        <label htmlFor="item_price" className="form-label fw-bold">Item Price:</label>
+                        <input
+                            type="number"
+                            className="form-control p-2 rounded-pill shadow-sm"
+                            id="item_price"
+                            name="item_price"
+                            placeholder="Price (INR)"
+                            onChange={handleChange}
+                            required
+                            value={snack.item_price}
+                            min={1}
+                            style={{ transition: "box-shadow 0.3s ease-in-out" }}
+                            onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(0, 123, 255, 0.5)'}
+                            onBlur={(e) => e.target.style.boxShadow = 'none'}
+                        />
+                    </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="item_category">Item Category:</label>
-                            <select
-                                name="item_category"
-                                id="item_category"
-                                className="form-control"
-                                onChange={handleChange}
-                                value={snack.item_category}
-                            >
-                                <option value="" disabled>Select</option>
-                                <option value="biscuits">Biscuits</option>
-                                <option value="chips">Chips</option>
-                                <option value="sweets">Sweets</option>
-                                <option value="noodles">Noodles</option>
-                                <option value="others">Others</option>
-                            </select>
-                        </div>
+                    <div className="mb-3">
+                        <label htmlFor="item_quantity" className="form-label fw-bold">Item Quantity:</label>
+                        <input
+                            type="number"
+                            className="form-control p-2 rounded-pill shadow-sm"
+                            id="item_quantity"
+                            name="item_quantity"
+                            placeholder="Quantity"
+                            onChange={handleChange}
+                            required
+                            value={snack.item_quantity}
+                            min={1}
+                            style={{ transition: "box-shadow 0.3s ease-in-out" }}
+                            onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(0, 123, 255, 0.5)'}
+                            onBlur={(e) => e.target.style.boxShadow = 'none'}
+                        />
+                    </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="item_block">Block:</label>
-                            <select
-                                name="item_block"
-                                id="item_block"
-                                className="form-control"
-                                onChange={handleChange}
-                                value={snack.item_block}
-                            >
-                                <option value="" disabled>Select</option>
-                                {blocks.map(generateBlockOptions)}
-                            </select>
-                        </div>
+                    <div className="mb-3">
+                        <label htmlFor="item_category" className="form-label fw-bold">Item Category:</label>
+                        <select
+                            name="item_category"
+                            id="item_category"
+                            className="form-control p-2 rounded-pill shadow-sm"
+                            onChange={handleChange}
+                            value={snack.item_category}
+                        >
+                            <option value="" disabled>Select</option>
+                            <option value="biscuits">Biscuits</option>
+                            <option value="chips">Chips</option>
+                            <option value="sweets">Sweets</option>
+                            <option value="noodles">Noodles</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="item_room">Room Number:</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="item_room"
-                                id="item_room"
-                                placeholder="Room Number"
-                                onChange={handleChange}
-                                value={snack.item_room}
-                                required
-                            />
-                        </div>
+                    <div className="mb-3">
+                        <label htmlFor="item_block" className="form-label fw-bold">Block:</label>
+                        <select
+                            name="item_block"
+                            id="item_block"
+                            className="form-control p-2 rounded-pill shadow-sm"
+                            onChange={handleChange}
+                            value={snack.item_block}
+                        >
+                            <option value="" disabled>Select</option>
+                            {blocks.map(generateBlockOptions)}
+                        </select>
+                    </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="item_image">Item Image:</label>
-                            <input
-                                type="file"
-                                className="form-control"
-                                name="item_image"
-                                id="item_image"
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
+                    <div className="mb-3">
+                        <label htmlFor="item_room" className="form-label fw-bold">Room Number:</label>
+                        <input
+                            type="text"
+                            className="form-control p-2 rounded-pill shadow-sm"
+                            name="item_room"
+                            id="item_room"
+                            placeholder="Room Number"
+                            onChange={handleChange}
+                            value={snack.item_room}
+                            required
+                            style={{ transition: "box-shadow 0.3s ease-in-out" }}
+                            onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(0, 123, 255, 0.5)'}
+                            onBlur={(e) => e.target.style.boxShadow = 'none'}
+                        />
+                    </div>
 
-                        <div className="text-center">
-                            <input
-                                type="submit"
-                                value="Submit"
-                                className="btn btn-dark"
-                                disabled={disableBtn}
-                            />
-                        </div>
-                    </form>
-                </div>
+                    <div className="mb-3">
+                        <label htmlFor="item_image" className="form-label fw-bold">Item Image:</label>
+                        <input
+                            type="file"
+                            className="form-control p-2 rounded-pill shadow-sm"
+                            name="item_image"
+                            id="item_image"
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
+                    <div className="text-center">
+                        <input
+                            type="submit"
+                            value="Submit"
+                            className="btn btn-dark rounded-pill px-4 py-2 shadow-sm"
+                            disabled={disableBtn}
+                        />
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
+</div>
+
     );
 }

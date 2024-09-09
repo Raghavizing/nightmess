@@ -142,52 +142,121 @@ export default function EditSnack() {
     }, [snack, originalSnack]);
 
     return (
-        <div className="container">
-            <div className="row justify-content-center align-items-center">
-                <div className="col-12 col-md-8 col-lg-6">
-                    <h1 className="text-center">Update Snack</h1>
-                    <form onSubmit={updateSnack} className="form-group" hidden={loading} encType="multipart/form-data">
-                        <input type="text" className="form-control my-2" id="name" name="item_name" placeholder="Name" onChange={handleChange} required value={snack.item_name} />
-                        <input type="number" className="form-control my-2" id="price" name="item_price" placeholder="Price(INR)" onChange={handleChange} required value={snack.item_price} min={1} />
-                        <input type="number" className="form-control my-2" id="quantity" name="item_quantity" placeholder="Quantity" onChange={handleChange} required value={snack.item_quantity} min={1} />
-                        
-                        <div className="my-2">
-                            <label htmlFor="category" className="form-label">Category:</label>
-                            <select name="item_category" id="category" className="form-control" onChange={handleChange} value={snack.item_category}>
-                                <option value="" disabled>Select</option>
-                                <option value="biscuits">Biscuits</option>
-                                <option value="chips">Chips</option>
-                                <option value="sweets">Sweets</option>
-                                <option value="noodles">Noodles</option>
-                                <option value="others">Others</option>
-                            </select>
-                        </div>
+        <div className="page py-5">
+    <div className="container">
+        <div className="row justify-content-center align-items-center mx-auto">
+            <div className="col-12 col-md-8 col-lg-6">
+                <h1 className="text-center fw-bold mb-4">Update Snack</h1>
 
-                        <div className="my-2">
-                            <label htmlFor="block" className="form-label">Block:</label>
-                            <select name="item_block" id="block" className="form-control" onChange={handleChange} value={snack.item_block}>
-                                <option value="" disabled>Select</option>
-                                {blocks.map(generateBlockOptions)}
-                            </select>
-                        </div>
+                {/* Snack Update Form */}
+                <form onSubmit={updateSnack} className="form-group p-4 shadow-lg bg-white rounded-2" hidden={loading} encType="multipart/form-data">
+                    <input 
+                        type="text" 
+                        className="form-control my-3 p-2 rounded-pill shadow-sm" 
+                        id="name" 
+                        name="item_name" 
+                        placeholder="Snack Name" 
+                        onChange={handleChange} 
+                        required 
+                        value={snack.item_name} 
+                    />
 
-                        <div className="my-2">
-                            <label htmlFor="item_room" className="form-label">Room Number:</label>
-                            <input type="text" name="item_room" id="item_room" className="form-control my-2" placeholder="Room Number" onChange={handleChange} value={snack.item_room} required />
-                        </div>
+                    <input 
+                        type="number" 
+                        className="form-control my-3 p-2 rounded-pill shadow-sm" 
+                        id="price" 
+                        name="item_price" 
+                        placeholder="Price (INR)" 
+                        onChange={handleChange} 
+                        required 
+                        value={snack.item_price} 
+                        min={1} 
+                    />
 
-                        <input type="file" name="item_image" id="item_image" className="form-control my-2" onChange={handleChange} />
+                    <input 
+                        type="number" 
+                        className="form-control my-3 p-2 rounded-pill shadow-sm" 
+                        id="quantity" 
+                        name="item_quantity" 
+                        placeholder="Quantity" 
+                        onChange={handleChange} 
+                        required 
+                        value={snack.item_quantity} 
+                        min={1} 
+                    />
 
-                        <div className="my-2 text-center">
-                            <input type="submit" value="Submit" className="btn btn-dark" disabled={disableBtn} />
-                        </div>
-                    </form>
-
-                    <div hidden={!loading}>
-                        <Loading />
+                    <div className="my-3">
+                        <label htmlFor="category" className="form-label fw-bold">Category:</label>
+                        <select 
+                            name="item_category" 
+                            id="category" 
+                            className="form-control form-select shadow-sm rounded-pill p-2" 
+                            onChange={handleChange} 
+                            value={snack.item_category}
+                        >
+                            <option value="" disabled>Select</option>
+                            <option value="biscuits">Biscuits</option>
+                            <option value="chips">Chips</option>
+                            <option value="sweets">Sweets</option>
+                            <option value="noodles">Noodles</option>
+                            <option value="others">Others</option>
+                        </select>
                     </div>
+
+                    <div className="my-3">
+                        <label htmlFor="block" className="form-label fw-bold">Block:</label>
+                        <select 
+                            name="item_block" 
+                            id="block" 
+                            className="form-control form-select shadow-sm rounded-pill p-2" 
+                            onChange={handleChange} 
+                            value={snack.item_block}
+                        >
+                            <option value="" disabled>Select</option>
+                            {blocks.map(generateBlockOptions)}
+                        </select>
+                    </div>
+
+                    <div className="my-3">
+                        <label htmlFor="item_room" className="form-label fw-bold">Room Number:</label>
+                        <input 
+                            type="text" 
+                            name="item_room" 
+                            id="item_room" 
+                            className="form-control my-3 p-2 rounded-pill shadow-sm" 
+                            placeholder="Room Number" 
+                            onChange={handleChange} 
+                            value={snack.item_room} 
+                            required 
+                        />
+                    </div>
+
+                    <input 
+                        type="file" 
+                        name="item_image" 
+                        id="item_image" 
+                        className="form-control my-3 p-2 rounded-pill shadow-sm" 
+                        onChange={handleChange} 
+                    />
+
+                    <div className="my-3 text-center">
+                        <input 
+                            type="submit" 
+                            value="Submit" 
+                            className="btn btn-dark rounded-pill px-4 py-2 shadow-sm" 
+                            disabled={disableBtn} 
+                        />
+                    </div>
+                </form>
+
+                {/* Loading Spinner */}
+                <div hidden={!loading}>
+                    <Loading />
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
     );
 }

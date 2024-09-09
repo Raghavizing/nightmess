@@ -81,17 +81,28 @@ export default function Snacks() {
 
     function Card({ listing_id, username, item_name, item_price, item_quantity, item_image, item_block, item_room }: any) {
         return (
-            <div className="card col-md-4 col-sm-6 col-12 m-3 p-3 shadow-sm" data-aos="fade-up">
-                <img src={item_image} className="card-img-top mx-auto" alt={item_name} style={{ maxHeight: '150px', objectFit: 'contain' }} />
+            <div
+                className="card col-md-4 col-sm-6 col-12 m-3 p-3 shadow-lg rounded-lg border-0"
+                data-aos="fade-up"
+                style={{ transition: "transform 0.3s", cursor: "pointer" }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+            >
+                <img
+                    src={item_image}
+                    className="card-img-top mx-auto rounded"
+                    alt={item_name}
+                    style={{ maxHeight: '150px', objectFit: "contain", borderRadius: "8px" }}
+                />
                 <div className="card-body">
-                    <h5 className="card-title text-center">{item_name}</h5>
+                    <h5 className="card-title text-center fw-bold">{item_name}</h5>
                     <p className="card-text text-center text-muted">Price: Rs {item_price}</p>
                     <p className="card-text text-center text-muted">Quantity: {item_quantity}</p>
                     <p className="card-text text-center text-muted">Seller: {username}</p>
                     <p className="card-text text-center text-muted">Room: {item_block}-{item_room}</p>
-                    <div className="d-flex justify-content-center">
+                    <div className="d-flex justify-content-center mt-3">
                         <button
-                            className="btn btn-primary mt-3"
+                            className="btn btn-outline-dark btn-lg mt-3"
                             id={listing_id}
                             onClick={() => {
                                 router.push(`/snackDetails?id=${listing_id}`);
@@ -106,20 +117,18 @@ export default function Snacks() {
     }
 
     return (
-        <div className="d-flex align-items-center justify-content-center h-100 py-4 snacks-page">
+        <div className="d-flex align-items-center justify-content-center h-100 py-4 page">
             <div className="container">
-                <h1 className="text-center mb-4">Snacks</h1>
+                <h1 className="text-center mb-4 fw-bold">Snacks</h1>
 
                 {/* Filter Form */}
-                <form onSubmit={filterSnacks} className="form-group col-lg-6 col-md-8 col-sm-12 mx-auto">
-                    <div className="my-2">
-                        <label htmlFor="category" className="form-label">
-                            Category:
-                        </label>
+                <form onSubmit={filterSnacks} className="form-group col-lg-6 col-md-8 col-sm-12 mx-auto p-4 shadow-sm bg-white rounded-2">
+                    <div className="my-3">
+                        <label htmlFor="category" className="form-label fw-bold">Category:</label>
                         <select
                             name="category"
                             id="category"
-                            className="form-control"
+                            className="form-control form-select rounded-pill"
                             onChange={handleChange}
                             value={filter.category}
                         >
@@ -131,30 +140,28 @@ export default function Snacks() {
                             <option value="others">Others</option>
                         </select>
                     </div>
-                    <div className="my-2">
-                        <label htmlFor="block" className="form-label my-auto">
-                            Block:
-                        </label>
+
+                    <div className="my-3">
+                        <label htmlFor="block" className="form-label fw-bold">Block:</label>
                         <select
                             name="block"
                             id="block"
-                            className="form-control"
+                            className="form-control form-select rounded-pill"
                             onChange={handleChange}
                             value={filter.block}
                         >
-                            <option value="">
-                                All
-                            </option>
+                            <option value="">All</option>
                             {blocks.map(generateBlockOptions)}
                         </select>
                     </div>
+
                     <div className="text-center">
-                        <input type="submit" value="Submit" className="btn btn-dark" />
+                        <input type="submit" value="Submit" className="btn btn-dark rounded-pill px-4 py-2 shadow-sm" />
                     </div>
                 </form>
 
                 {/* Snack Cards */}
-                <div className="row mt-4 d-flex justify-content-center align-items-strech" hidden={loading}>
+                <div className="row mt-4 d-flex justify-content-center align-items-stretch" hidden={loading}>
                     {filteredSnacks.map((snack: any) => (
                         <Card key={snack._id} listing_id={snack._id} {...snack} />
                     ))}
@@ -166,5 +173,6 @@ export default function Snacks() {
                 </div>
             </div>
         </div>
+
     );
 }

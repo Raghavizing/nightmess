@@ -74,24 +74,40 @@ export default function Profile() {
         }
     }
 
-    function Card({ listing_id, username, item_name, item_price, item_quantity, item_image, item_block,item_room }: any) {
+    function Card({ listing_id, username, item_name, item_price, item_quantity, item_image, item_block, item_room }: any) {
         return (
-            <div className="card col-md-4 col-sm-6 col-12 m-3 p-3 shadow-sm" data-aos="fade-up">
-                <img src={item_image} className="card-img-top mx-auto" alt={item_name} style={{ maxHeight: '150px', objectFit: 'contain' }} />
+            <div 
+                className="card col-md-4 col-sm-6 col-12 m-3 p-3 shadow-lg rounded-lg border-0" 
+                data-aos="fade-up" 
+                style={{ transition: "transform 0.3s", cursor: "pointer" }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+            >
+                <img 
+                    src={item_image} 
+                    className="card-img-top mx-auto rounded" 
+                    alt={item_name} 
+                    style={{ maxHeight: '150px', objectFit:"contain", borderRadius: "8px" }} 
+                />
                 <div className="card-body">
-                    <h5 className="card-title text-center">{item_name}</h5>
+                    <h5 className="card-title text-center fw-bold">{item_name}</h5>
                     <p className="card-text text-center text-muted">Price: Rs {item_price}</p>
                     <p className="card-text text-center text-muted">Quantity: {item_quantity}</p>
                     <p className="card-text text-center text-muted">Seller: {username}</p>
                     <p className="card-text text-center text-muted">Room: {item_block}-{item_room}</p>
-                    <div className="d-flex justify-content-center">
-                        <button className="btn btn-primary mx-2" id={listing_id} onClick={updateListing}>Edit</button>
-                        <button className="btn btn-danger mx-2" id={listing_id} onClick={deleteListing}>Delete</button>
+                    <div className="d-flex justify-content-center mt-3">
+                        <button className="btn btn-outline-primary mx-2" id={listing_id} onClick={updateListing}>
+                            Edit
+                        </button>
+                        <button className="btn btn-outline-danger mx-2" id={listing_id} onClick={deleteListing}>
+                            Delete
+                        </button>
                     </div>
                 </div>
             </div>
         );
     }
+    
 
     useEffect(() => {
         AOS.init();
@@ -100,51 +116,59 @@ export default function Profile() {
     }, []);
 
     return (
-        <div className="container py-5" style={{ minHeight: "100vh" }}>
-            <div className="row">
-                <div className="col-12">
-                    <h1 className="text-center">Profile</h1>
-                    <div className="user-details mt-4 d-flex justify-content-center">
-                        <div className="card p-4 shadow-sm" style={{ maxWidth: '400px' }} hidden={userLoading}>
-                            <img
-                                src={user.imageUrl}
-                                alt="User Profile"
-                                className="rounded-circle mx-auto"
-                                style={{ width: '150px', height: '150px', objectFit: 'cover' }}
-                            />
-                            <h3 className="mt-3 text-center" hidden={(!user.firstName || user.firstName.length===0) && (!user.lastName || user.lastName.length===0)}>
-                                Name: {user.firstName} {user.lastName}
-                            </h3>
-                            <p className="text-center text-muted">Phone Number: {user.phoneNumbers && user.phoneNumbers.length > 0 ? user.phoneNumbers[0].phoneNumber : 'Not available'}</p>
-                            <p className="text-center text-muted">Email Address: {user.emailAddresses && user.emailAddresses.length > 0 ? user.emailAddresses[0].emailAddress : 'Not available'}</p>
-                            <p className="text-center text-muted">
-                                Joined on: {new Date(user.createdAt).toLocaleDateString()}
-                            </p>
+        <div className="page py-5">
+    <div className="container">
+        <div className="col-12">
+            <h1 className="text-center fw-bold mb-4">Profile</h1>
+
+            {/* User Details */}
+            <div className="user-details d-flex justify-content-center">
+                <div className="card p-4 shadow-lg border-0 rounded-lg text-center" style={{ maxWidth: '400px' }} hidden={userLoading}>
+                    <img
+                        src={user.imageUrl}
+                        alt="User Profile"
+                        className="rounded-circle mx-auto shadow-sm"
+                        style={{ width: '150px', height: '150px', objectFit: 'cover', border: '5px solid #fff' }}
+                    />
+                    <h3 className="mt-3 fw-bold" hidden={(!user.firstName || user.firstName.length === 0) && (!user.lastName || user.lastName.length === 0)}>
+                        {user.firstName} {user.lastName}
+                    </h3>
+                    <p className="text-center text-muted">Phone: {user.phoneNumbers && user.phoneNumbers.length > 0 ? user.phoneNumbers[0].phoneNumber : 'Not available'}</p>
+                    <p className="text-center text-muted">Email: {user.emailAddresses && user.emailAddresses.length > 0 ? user.emailAddresses[0].emailAddress : 'Not available'}</p>
+                    <p className="text-center text-muted">
+                        Joined on: {new Date(user.createdAt).toLocaleDateString()}
+                    </p>
+                </div>
+
+                <div hidden={!userLoading}>
+                    <Loading />
+                </div>
+            </div>
+
+            {/* Snack Listing Section */}
+            <div className="mt-5">
+                <h2 className="text-center fw-bold mb-4">My Snacks</h2>
+
+                <div className="row justify-content-center">
+                    {loading && <Loading />}
+                    {!loading && userSnacks.length === 0 && (
+                        <div className="text-center">
+                            <h4 className="text-muted">It's so empty here</h4>
+                            <Link href="/addSnacks">
+                                <p className="text-primary">Add Some Snacks</p>
+                            </Link>
                         </div>
-                        <div hidden={!userLoading}>
-                            <Loading />
-                        </div>
-                    </div>
-                    {/* Snack listing section */}
-                    <div className="mt-5">
-                        <h2 className="text-center">My Snacks</h2>
-                        <div className="row justify-content-center">
-                            {loading && <Loading />}
-                            {!loading && userSnacks.length === 0 && (
-                                <div className="text-center">
-                                    <h4>It's so empty here</h4>
-                                    <Link href="/addSnacks">
-                                        <p>Add Some Snacks</p>
-                                    </Link>
-                                </div>
-                            )}
-                            {!loading && userSnacks.length > 0 && userSnacks.map((snack: any) => (
-                                <Card key={snack._id} listing_id={snack._id} {...snack} />
-                            ))}
-                        </div>
-                    </div>
+                    )}
+
+                    {/* User's Snack Cards */}
+                    {!loading && userSnacks.length > 0 && userSnacks.map((snack: any) => (
+                        <Card key={snack._id} listing_id={snack._id} {...snack} />
+                    ))}
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
     );
 }
