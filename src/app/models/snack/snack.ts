@@ -1,4 +1,4 @@
-import Connect from "@/app/dbConfig/dbConfig";
+import Connect from "@/app/utils/dbConfig/dbConfig";
 import mongoose, { Schema } from "mongoose";
 Connect();
 const snackSchema = new Schema({

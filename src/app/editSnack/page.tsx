@@ -1,11 +1,12 @@
 "use client"
 import axios from "axios";
-import Loading from "@/app/components/loading/loading"
+import Loading from "@/app/components/loading/loading";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+
 export default function EditSnack() {
     const [originalSnack, setOriginalSnack] = useState({
         item_name: "",
@@ -13,9 +14,10 @@ export default function EditSnack() {
         item_quantity: 0,
         item_category: "",
         item_block: "",
-        item_image: "",
-        item_room:""
+        item_image: null,
+        item_room: ""
     });
+    const [id, setId] = useState('');
     const [disableBtn, setDisableBtn] = useState(true);
     const [loading, setLoading] = useState(false);
     const [snack, setSnack] = useState({
@@ -24,11 +26,19 @@ export default function EditSnack() {
         item_quantity: 0,
         item_category: "",
         item_block: "",
-        item_image: "",
-        item_room:""
+        item_image: null,
+        item_room: ""
     });
     const searchParams = useSearchParams();
     const router = useRouter();
+    const blocks = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T"];
+    
+    function generateBlockOptions(block: any) {
+        return (
+            <option key={block} value={block}>{block} Block</option>
+        );
+    }
+
     async function updateSnack(event: any) {
         event.preventDefault();
         setLoading(true);
@@ -38,124 +48,146 @@ export default function EditSnack() {
             showCancelButton: true,
             confirmButtonText: "Update",
             denyButtonText: `Cancel`
-        })
+        });
         if (confirm.value) {
             try {
-                const res = await axios.post("/api/snacks/updateSnack", { snack: snack });
+                const formData = new FormData();
+                formData.append("item_id", id);
+                formData.append("item_name", snack.item_name);
+                formData.append("item_price", snack.item_price.toString());
+                formData.append("item_category", snack.item_category);
+                formData.append("item_image", snack.item_image || '');
+                formData.append("item_quantity", snack.item_quantity.toString());
+                formData.append("item_block", snack.item_block);
+                formData.append("item_room", snack.item_room);
+                const res = await axios.post("/api/snacks/updateSnack", formData);
                 if (res.data.success) {
                     toast.success(res.data.message);
                     router.push("/profile");
-                }
-                else {
+                } else {
                     toast.error(res.data.error);
                 }
-            }
-            catch (error: any) {
+            } catch (error: any) {
                 toast.error(error.message);
-            }
-            finally {
+            } finally {
                 setLoading(false);
             }
-        }
-        else {
+        } else {
             setLoading(false);
         }
     }
+
     function handleChange(event: any) {
-        const { name, value } = event.target
-        setSnack((prev) => {
-            return {
+        const { name, value } = event.target;
+        if (name === "item_image") {
+            const file = event.target.files[0];
+            setSnack((prev) => ({
+                ...prev,
+                [name]: file
+            }));
+        } else {
+            setSnack((prev) => ({
                 ...prev,
                 [name]: value
-            }
-        })
+            }));
+        }
     }
+
     async function getSnack(listing_id: any) {
         setLoading(true);
         try {
             const res = await axios.post("./api/snacks/verifyUserAndGetSnack", { id: listing_id });
             if (res.data.success) {
+                res.data.snack.item_image = null;
                 setOriginalSnack(res.data.snack);
-                setSnack(res.data.snack)
-            }
-            else {
+                setSnack(res.data.snack);
+            } else {
                 toast.error(res.data.error);
                 router.push("/");
             }
-        }
-        catch (error: any) {
-            toast.error(error.mesage);
+        } catch (error: any) {
+            toast.error(error.message);
             router.push("/");
-        }
-        finally {
+        } finally {
             setLoading(false);
         }
     }
+
     useEffect(() => {
         const id = searchParams.get("id");
-        if (id && id?.length > 0) {
+        if (id && id.length > 0) {
+            setId(id);
             getSnack(id);
-        }
-        else {
+        } else {
             toast.error("Some Error Has Occurred");
             router.push("/");
         }
-    }, [searchParams])
+    }, [searchParams]);
+
     useEffect(() => {
         const isEqual =
-            snack.item_name === originalSnack?.item_name &&
-            snack.item_price === originalSnack?.item_price &&
-            snack.item_quantity === originalSnack?.item_quantity &&
-            snack.item_category === originalSnack?.item_category &&
-            snack.item_block === originalSnack?.item_block &&
-            snack.item_image === originalSnack?.item_image &&
-            snack.item_room === originalSnack?.item_room;
-        if (isEqual || snack.item_name.length === 0 || snack.item_block.length === 0 || snack.item_category.length === 0 || snack.item_quantity === 0 || snack.item_price === 0 || snack.item_room.length===0) {
+            snack.item_name === originalSnack.item_name &&
+            snack.item_price === originalSnack.item_price &&
+            snack.item_quantity === originalSnack.item_quantity &&
+            snack.item_category === originalSnack.item_category &&
+            snack.item_block === originalSnack.item_block &&
+            !snack.item_image &&
+            snack.item_room === originalSnack.item_room;
+
+        if (isEqual || !snack.item_name || !snack.item_block || !snack.item_category || !snack.item_quantity || !snack.item_room) {
             setDisableBtn(true);
-        }
-        else {
+        } else {
             setDisableBtn(false);
         }
-    }, [snack, originalSnack])
-    return (<div className="d-flex align-items-center justify-content-center h-100">
-        <div>
-            <h1>Update Snack</h1>
-            <form onSubmit={updateSnack} className="form-group" hidden={loading}>
-                <input type="text" className="form-control my-2" id="name" name="item_name" placeholder="Name" onChange={handleChange} required value={snack.item_name} />
-                <input type="number" className="form-control my-2" id="price" name="item_price" placeholder="Price(INR)" onChange={handleChange} required value={snack.item_price} min={1} />
-                <input type="number" className="form-control my-2" id="quantity" name="item_quantity" placeholder="Quantity" onChange={handleChange} required value={snack.item_quantity} min={1} />
-                <div className="my-2">
-                    <label htmlFor="category" className="form-label">Category:</label>
-                    <select name="item_category" id="category" className="form-control" onChange={handleChange} value={snack.item_category}>
-                        <option value="" disabled>Select</option>
-                        <option value="biscuits">Biscuits</option>
-                        <option value="chips">Chips</option>
-                        <option value="sweets">Sweets</option>
-                        <option value="noodles">Noodles</option>
-                        <option value="others">Others</option>
-                    </select>
+    }, [snack, originalSnack]);
+
+    return (
+        <div className="container">
+            <div className="row justify-content-center align-items-center">
+                <div className="col-12 col-md-8 col-lg-6">
+                    <h1 className="text-center">Update Snack</h1>
+                    <form onSubmit={updateSnack} className="form-group" hidden={loading} encType="multipart/form-data">
+                        <input type="text" className="form-control my-2" id="name" name="item_name" placeholder="Name" onChange={handleChange} required value={snack.item_name} />
+                        <input type="number" className="form-control my-2" id="price" name="item_price" placeholder="Price(INR)" onChange={handleChange} required value={snack.item_price} min={1} />
+                        <input type="number" className="form-control my-2" id="quantity" name="item_quantity" placeholder="Quantity" onChange={handleChange} required value={snack.item_quantity} min={1} />
+                        
+                        <div className="my-2">
+                            <label htmlFor="category" className="form-label">Category:</label>
+                            <select name="item_category" id="category" className="form-control" onChange={handleChange} value={snack.item_category}>
+                                <option value="" disabled>Select</option>
+                                <option value="biscuits">Biscuits</option>
+                                <option value="chips">Chips</option>
+                                <option value="sweets">Sweets</option>
+                                <option value="noodles">Noodles</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+
+                        <div className="my-2">
+                            <label htmlFor="block" className="form-label">Block:</label>
+                            <select name="item_block" id="block" className="form-control" onChange={handleChange} value={snack.item_block}>
+                                <option value="" disabled>Select</option>
+                                {blocks.map(generateBlockOptions)}
+                            </select>
+                        </div>
+
+                        <div className="my-2">
+                            <label htmlFor="item_room" className="form-label">Room Number:</label>
+                            <input type="text" name="item_room" id="item_room" className="form-control my-2" placeholder="Room Number" onChange={handleChange} value={snack.item_room} required />
+                        </div>
+
+                        <input type="file" name="item_image" id="item_image" className="form-control my-2" onChange={handleChange} />
+
+                        <div className="my-2 text-center">
+                            <input type="submit" value="Submit" className="btn btn-dark" disabled={disableBtn} />
+                        </div>
+                    </form>
+
+                    <div hidden={!loading}>
+                        <Loading />
+                    </div>
                 </div>
-                <div className="my-2">
-                    <label htmlFor="block" className="form-label my-auto">Block:</label>
-                    <select name="item_block" id="block" className="form-control" onChange={handleChange} value={snack.item_block}>
-                        <option value="" disabled>Select</option>
-                        <option value="R">R Block</option>
-                        <option value="Q">Q Block</option>
-                        <option value="K">K Block </option>
-                        <option value="L">L Block</option>
-                        <option value="N">N Block</option>
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="item_room" className="form-label my-auto">Room Number:</label>
-                    <input type="text" name="item_room" id="item_room" className="form-control my-2" placeholder="Room Number" onChange={handleChange} value={snack.item_room} required />
-                </div>
-                <input type="url" name="item_image" id="image" className="form-control my-2" placeholder="Image URL" onChange={handleChange} value={snack.item_image} required />
-                <div className="my-2 text-center"><input type="submit" value="Submit" className="btn btn-dark" disabled={disableBtn} /></div>
-            </form>
-            <div hidden={!loading}>
-                <Loading />
             </div>
         </div>
-    </div>)
+    );
 }

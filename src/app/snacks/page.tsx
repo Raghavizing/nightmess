@@ -72,6 +72,12 @@ export default function Snacks() {
         setFilteredSnacks(x);
         setLoading(false);
     }
+    const blocks = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T"];
+    function generateBlockOptions(block: any) {
+        return (
+            <option value={block}>{block} Block</option>
+        )
+    }
 
     function Card({ listing_id, username, item_name, item_price, item_quantity, item_image, item_block, item_room }: any) {
         return (
@@ -139,11 +145,7 @@ export default function Snacks() {
                             <option value="">
                                 All
                             </option>
-                            <option value="R">R Block</option>
-                            <option value="Q">Q Block</option>
-                            <option value="K">K Block</option>
-                            <option value="L">L Block</option>
-                            <option value="N">N Block</option>
+                            {blocks.map(generateBlockOptions)}
                         </select>
                     </div>
                     <div className="text-center">

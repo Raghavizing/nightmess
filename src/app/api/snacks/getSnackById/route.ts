@@ -1,4 +1,4 @@
-import Connect from "@/app/dbConfig/dbConfig";
+import Connect from "@/app/utils/dbConfig/dbConfig";
 import Snack from "@/app/models/snack/snack";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
